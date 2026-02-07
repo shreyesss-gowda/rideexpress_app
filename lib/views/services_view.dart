@@ -4,6 +4,7 @@ import '../viewmodels/services_viewmodel.dart';
 import '../widgets/service_card.dart';
 import 'home_view.dart';
 import 'about_view.dart';
+import 'bookings_list_view.dart';
 
 class ServicesView extends StatelessWidget {
   const ServicesView({super.key});
@@ -37,37 +38,40 @@ class ServicesView extends StatelessWidget {
   }
 
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      selectedItemColor: const Color(0xFF2196F3),
-      unselectedItemColor: Colors.grey,
-      onTap: (index) {
-        if (index == 0) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const HomeView()),
-          );
-        } else if (index == 2) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const AboutView()),
-          );
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.car_rental),
-          label: 'Services',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.info),
-          label: 'About',
-        ),
-      ],
-    );
-  }
+  return BottomNavigationBar(
+    currentIndex: currentIndex,
+    selectedItemColor: const Color(0xFF2196F3),
+    unselectedItemColor: Colors.grey,
+    type: BottomNavigationBarType.fixed,
+    onTap: (index) {
+      if (index == 0) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeView()),
+        );
+      } else if (index == 1 && currentIndex != 1) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ServicesView()),
+        );
+      } else if (index == 2 && currentIndex != 2) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const AboutView()),
+        );
+      } else if (index == 3) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const BookingsListView()),
+        );
+      }
+    },
+    items: const [
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      BottomNavigationBarItem(icon: Icon(Icons.car_rental), label: 'Services'),
+      BottomNavigationBarItem(icon: Icon(Icons.info), label: 'About'),
+      BottomNavigationBarItem(icon: Icon(Icons.book_online), label: 'Bookings'),
+    ],
+  );
+}
 }
